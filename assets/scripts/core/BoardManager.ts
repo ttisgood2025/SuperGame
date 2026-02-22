@@ -34,4 +34,8 @@ export class BoardManager {
   public getClickableTiles(): TileData[] {
     return this.tiles.filter((item) => item.blockedBy.length === 0);
   }
+
+  public getAllTiles(): TileData[] {
+    return [...this.tiles];
+  }
 }

@@ -24,7 +24,7 @@
 2. 将本仓库 `assets/` 内容拷贝进项目。
 3. 在主场景挂载 `GameController`。
 4. 把 `assets/resources/config/levels.json` 绑定到 `levelsAsset`。
-5. 创建卡牌预制体与 UI（可参考 `docs/setup-cocos.md`）。
+5. 创建卡牌预制体与 UI，并挂载 `SimpleBoardUI`（详见 `docs/setup-cocos.md`）。
 
 ## 开发检查命令
 - `python -m json.tool config/levels.json >/dev/null`
@@ -34,3 +34,8 @@
 ## 已修复导入问题
 - `assets/scripts/core` 现已自包含 `GameTypes.ts` 与 `LevelGenerator.ts`。
 - 仅复制 `assets/` 到新建 Cocos 工程即可，不再依赖 `../../../src/*` 路径。
+
+
+## 运行后若只看到黑底和按钮
+- 这说明当前场景是“静态 UI”，还未绑定动态牌面渲染。
+- 请按 `docs/setup-cocos.md` 第 5~6 步绑定 `SimpleBoardUI + TileContainer + TileItem`。

@@ -28,6 +28,14 @@ export class LevelManager {
     return level;
   }
 
+  public hasLevel(levelId: number): boolean {
+    return this.levels.some((item) => item.id === levelId);
+  }
+
+  public getMaxLevelId(): number {
+    return this.levels.length;
+  }
+
   public getAllLevels(): LevelConfig[] {
     return this.levels;
   }
