@@ -1,5 +1,5 @@
 import { _decorator, JsonAsset } from 'cc';
-import { LevelConfig } from '../../../src/GameConfig';
+import { LevelConfig } from './GameTypes';
 
 const { ccclass, property } = _decorator;
 

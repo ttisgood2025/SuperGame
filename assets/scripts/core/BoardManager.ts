@@ -1,6 +1,6 @@
 import { _decorator } from 'cc';
-import { LevelConfig } from '../../../src/GameConfig';
-import { generateTiles, TileData } from '../../../src/LevelGenerator';
+import { generateTiles } from './LevelGenerator';
+import { LevelConfig, TileData } from './GameTypes';
 
 const { ccclass } = _decorator;
 

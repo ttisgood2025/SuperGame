@@ -16,7 +16,7 @@
 - `assets/resources/config/levels.json`：可直接被 Cocos `JsonAsset` 加载的关卡配置。
 - `assets/resources/theme/pet-theme.json`：萌宠主题配置。
 - `assets/resources/i18n/zh-CN.json`：中文文案配置。
-- `src/`：通用关卡与生成逻辑。
+- `src/`：仓库内的通用逻辑参考（可选，不是 Cocos 运行必需）。
 - `assets/scripts/`：可挂载到 Cocos 场景的核心脚本骨架。
 
 ## 快速接入 Cocos Creator 3.8.2
@@ -29,3 +29,8 @@
 ## 开发检查命令
 - `python -m json.tool config/levels.json >/dev/null`
 - `python -m json.tool assets/resources/config/levels.json >/dev/null`
+
+
+## 已修复导入问题
+- `assets/scripts/core` 现已自包含 `GameTypes.ts` 与 `LevelGenerator.ts`。
+- 仅复制 `assets/` 到新建 Cocos 工程即可，不再依赖 `../../../src/*` 路径。
