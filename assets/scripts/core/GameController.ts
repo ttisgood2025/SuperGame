@@ -27,16 +27,16 @@ export class GameController extends Component {
 
   protected onLoad(): void {
     if (this.levelsAsset) {
-      this.initializeWithAsset(this.levelsAsset);
+      this.initializeWithAsset(this.levelsAsset, 1);
     }
   }
 
-  public initializeWithAsset(levelsAsset: JsonAsset): void {
+  public initializeWithAsset(levelsAsset: JsonAsset, startLevelId = 1): void {
     this.levelsAsset = levelsAsset;
-    this.initializeWithData(levelsAsset.json as { levels: LevelConfig[] });
+    this.initializeWithData(levelsAsset.json as { levels: LevelConfig[] }, startLevelId);
   }
 
-  public initializeWithData(payload: { levels: LevelConfig[] }): void {
+  public initializeWithData(payload: { levels: LevelConfig[] }, startLevelId = 1): void {
     this.levelManager.loadFromData(payload);
     this.initialized = this.levelManager.getMaxLevelId() > 0;
 
@@ -46,7 +46,8 @@ export class GameController extends Component {
       return;
     }
 
-    this.startLevel(1);
+    const resolvedLevelId = this.resolveStartLevel(startLevelId);
+    this.startLevel(resolvedLevelId);
   }
 
   public onChanged(callback: () => void, target?: unknown): void {
@@ -134,6 +135,15 @@ export class GameController extends Component {
 
   public getWallet(): { coins: number; stars: number } {
     return this.economyManager.getWallet();
+  }
+
+  private resolveStartLevel(startLevelId: number): number {
+    if (this.levelManager.hasLevel(startLevelId)) {
+      return startLevelId;
+    }
+
+    const firstLevel = this.levelManager.getAllLevels()[0];
+    return firstLevel?.id ?? 1;
   }
 
   private emitChanged(): void {

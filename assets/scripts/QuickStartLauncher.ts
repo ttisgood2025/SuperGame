@@ -16,10 +16,13 @@ import {
 import { GameController } from './core/GameController';
 import { SimpleBoardUI } from './ui/SimpleBoardUI';
 
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass('QuickStartLauncher')
 export class QuickStartLauncher extends Component {
+  @property({ tooltip: '测试用：初始关卡（1~60）。联调后请改回 1。' })
+  public startLevelId = 1;
+
   protected onLoad(): void {
     const gameRoot = new Node('GameRoot');
     this.node.addChild(gameRoot);
@@ -29,7 +32,7 @@ export class QuickStartLauncher extends Component {
     this.node.addChild(uiRoot);
 
     const statusLabel = this.createLabel('StatusLabel', new Vec3(0, 300, 0), '状态：加载中');
-    const levelLabel = this.createLabel('LevelLabel', new Vec3(-260, 360, 0), '关卡 0/60');
+    const levelLabel = this.createLabel('LevelLabel', new Vec3(-260, 360, 0), `关卡 ${this.startLevelId}/60`);
     const walletLabel = this.createLabel('WalletLabel', new Vec3(230, 360, 0), '金币 0 | 星星 0');
     const slotLabel = this.createLabel('SlotLabel', new Vec3(0, -250, 0), '槽位：空');
 
@@ -70,20 +73,23 @@ export class QuickStartLauncher extends Component {
     simpleBoardUI.restartButton = restartButtonNode.getComponent(Button);
 
     // 先使用兜底关卡，保证画面不会停在“加载中”。
-    gameController.initializeWithData({
-      levels: [
-        {
-          id: 1,
-          chapter: 1,
-          petTypes: 6,
-          totalTiles: 36,
-          layers: 2,
-          slotCapacity: 7,
-          obstacleRate: 0,
-          target: 'clear_all',
-        },
-      ],
-    });
+    gameController.initializeWithData(
+      {
+        levels: [
+          {
+            id: 1,
+            chapter: 1,
+            petTypes: 6,
+            totalTiles: 36,
+            layers: 2,
+            slotCapacity: 7,
+            obstacleRate: 0,
+            target: 'clear_all',
+          },
+        ],
+      },
+      this.startLevelId,
+    );
     simpleBoardUI.setup();
 
     resources.load('config/levels', JsonAsset, (error, asset) => {
@@ -95,7 +101,7 @@ export class QuickStartLauncher extends Component {
         return;
       }
 
-      gameController.initializeWithAsset(asset);
+      gameController.initializeWithAsset(asset, this.startLevelId);
       simpleBoardUI.setup();
     });
   }

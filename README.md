@@ -39,3 +39,7 @@
 
 ## 开发复盘与标准化指南
 - `docs/standardized-dev-guide.md`：从 0 到当前可运行状态的最简 SOP、踩坑复盘与排障清单。
+
+
+## 关卡测试技巧
+- 可在 `Canvas` 的 `QuickStartLauncher.startLevelId` 设置起始关（例如 `60`），回归测试后请改回 `1`。
