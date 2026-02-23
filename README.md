@@ -43,3 +43,11 @@
 
 ## 关卡测试技巧
 - 可在 `Canvas` 的 `QuickStartLauncher.startLevelId` 设置起始关（例如 `60`），回归测试后请改回 `1`。
+
+
+## 卡牌图片资源
+- 推荐放在 `assets/resources/sprites/pets/`，命名 `pet_1.png`、`pet_2.png` ...
+- `SimpleBoardUI` 默认会按 `sprites/pets/pet_{petType}` 自动加载。
+
+## 失败反馈
+- 已内置失败弹层（LosePanel）：失败时显示“闯关失败 + 再来一局”，点击后立即重开本关。

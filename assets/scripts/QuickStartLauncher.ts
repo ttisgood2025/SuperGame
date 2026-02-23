@@ -62,6 +62,9 @@ export class QuickStartLauncher extends Component {
     uiRoot.addChild(nextButtonNode);
     uiRoot.addChild(restartButtonNode);
 
+    const losePanel = this.createLosePanel();
+    uiRoot.addChild(losePanel.root);
+
     const simpleBoardUI = uiRoot.addComponent(SimpleBoardUI);
     simpleBoardUI.gameController = gameController;
     simpleBoardUI.tileContainer = tileContainer;
@@ -71,8 +74,11 @@ export class QuickStartLauncher extends Component {
     simpleBoardUI.slotLabel = slotLabel.getComponent(Label);
     simpleBoardUI.nextLevelButton = nextButtonNode.getComponent(Button);
     simpleBoardUI.restartButton = restartButtonNode.getComponent(Button);
+    simpleBoardUI.losePanel = losePanel.root;
+    simpleBoardUI.loseTitleLabel = losePanel.title;
+    simpleBoardUI.loseDescLabel = losePanel.desc;
+    simpleBoardUI.loseRestartButton = losePanel.restartButton;
 
-    // 先使用兜底关卡，保证画面不会停在“加载中”。
     gameController.initializeWithData(
       {
         levels: [
@@ -106,10 +112,45 @@ export class QuickStartLauncher extends Component {
     });
   }
 
+  private createLosePanel(): { root: Node; title: Label | null; desc: Label | null; restartButton: Button | null } {
+    const root = new Node('LosePanel');
+    root.active = false;
+
+    const rootUI = root.addComponent(UITransform);
+    rootUI.setContentSize(650, 500);
+    root.setPosition(new Vec3(0, 0, 0));
+
+    const bg = root.addComponent(Sprite);
+    bg.color = new Color(30, 30, 30, 220);
+
+    const titleNode = this.createLabel('LoseTitle', new Vec3(0, 120, 0), '闯关失败');
+    const title = titleNode.getComponent(Label);
+    if (title) {
+      title.fontSize = 48;
+      title.color = new Color(255, 163, 163, 255);
+    }
+
+    const descNode = this.createLabel('LoseDesc', new Vec3(0, 40, 0), '差一点就过了！再来一局');
+    const desc = descNode.getComponent(Label);
+    if (desc) {
+      desc.fontSize = 30;
+      desc.lineHeight = 36;
+    }
+
+    const restartNode = this.createButton('LoseRestartButton', new Vec3(0, -90, 0), '再来一局');
+    const restartButton = restartNode.getComponent(Button);
+
+    root.addChild(titleNode);
+    root.addChild(descNode);
+    root.addChild(restartNode);
+
+    return { root, title, desc, restartButton };
+  }
+
   private createLabel(name: string, position: Vec3, text: string): Node {
     const node = new Node(name);
     const ui = node.addComponent(UITransform);
-    ui.setContentSize(420, 40);
+    ui.setContentSize(520, 60);
     node.setPosition(position);
 
     const label = node.addComponent(Label);

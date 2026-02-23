@@ -1,4 +1,18 @@
-import { _decorator, Button, Color, Component, instantiate, Label, Layout, Node, Prefab, Sprite, UITransform } from 'cc';
+import {
+  _decorator,
+  Button,
+  Color,
+  Component,
+  instantiate,
+  Label,
+  Layout,
+  Node,
+  Prefab,
+  resources,
+  Sprite,
+  SpriteFrame,
+  UITransform,
+} from 'cc';
 import { GameController } from '../core/GameController';
 import { TileData } from '../core/GameTypes';
 
@@ -33,12 +47,29 @@ export class SimpleBoardUI extends Component {
   @property(Button)
   public restartButton: Button | null = null;
 
+  @property({ tooltip: '宠物图标资源前缀，最终路径示例：resources/sprites/pets/pet_1.png -> sprites/pets/pet_1' })
+  public petIconPathPrefix = 'sprites/pets/pet_';
+
+  @property(Node)
+  public losePanel: Node | null = null;
+
+  @property(Label)
+  public loseTitleLabel: Label | null = null;
+
+  @property(Label)
+  public loseDescLabel: Label | null = null;
+
+  @property(Button)
+  public loseRestartButton: Button | null = null;
+
   private subscribed = false;
   private autoNextScheduled = false;
+  private iconCache = new Map<number, SpriteFrame | null>();
 
   protected onLoad(): void {
     this.nextLevelButton?.node.on(Button.EventType.CLICK, this.onNextLevel, this);
     this.restartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.loseRestartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
   }
 
   protected start(): void {
@@ -49,6 +80,7 @@ export class SimpleBoardUI extends Component {
   protected onDestroy(): void {
     this.nextLevelButton?.node.off(Button.EventType.CLICK, this.onNextLevel, this);
     this.restartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.loseRestartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
 
     if (this.subscribed && this.gameController) {
       this.gameController.offChanged(this.refresh, this);
@@ -72,6 +104,7 @@ export class SimpleBoardUI extends Component {
   }
 
   private onRestartLevel(): void {
+    this.losePanel && (this.losePanel.active = false);
     this.gameController?.restartLevel();
   }
 
@@ -109,6 +142,8 @@ export class SimpleBoardUI extends Component {
       this.nextLevelButton.node.active = canNext;
     }
 
+    this.updateLosePanel(state, levelId);
+
     if (state === 'win' && levelId < maxLevelId) {
       this.scheduleAutoNext();
     } else {
@@ -116,6 +151,21 @@ export class SimpleBoardUI extends Component {
     }
 
     this.renderTiles(this.gameController.getClickableTiles());
+  }
+
+  private updateLosePanel(state: string, levelId: number): void {
+    const isLose = state === 'lose';
+    if (this.losePanel) {
+      this.losePanel.active = isLose;
+    }
+
+    if (this.loseTitleLabel) {
+      this.loseTitleLabel.string = isLose ? '闯关失败' : '';
+    }
+
+    if (this.loseDescLabel) {
+      this.loseDescLabel.string = isLose ? `第 ${levelId} 关差一点就过了！\n立即重开，再冲一次！` : '';
+    }
   }
 
   private scheduleAutoNext(): void {
@@ -146,10 +196,7 @@ export class SimpleBoardUI extends Component {
 
     tiles.slice(0, 24).forEach((tile) => {
       const item = this.tilePrefab ? instantiate(this.tilePrefab) : this.createDefaultTileItem();
-      const label = item.getComponentInChildren(Label);
-      if (label) {
-        label.string = `${tile.petType}`;
-      }
+      this.applyTileVisual(item, tile);
 
       const button = item.getComponent(Button);
       if (button) {
@@ -159,6 +206,43 @@ export class SimpleBoardUI extends Component {
       }
 
       this.tileContainer?.addChild(item);
+    });
+  }
+
+  private applyTileVisual(item: Node, tile: TileData): void {
+    const label = item.getComponentInChildren(Label);
+    if (label) {
+      label.string = `${tile.petType}`;
+      label.color = new Color(35, 35, 35, 255);
+    }
+
+    const sprite = item.getComponent(Sprite);
+    if (!sprite) {
+      return;
+    }
+
+    const cached = this.iconCache.get(tile.petType);
+    if (cached !== undefined) {
+      if (cached) {
+        sprite.spriteFrame = cached;
+        label && (label.string = '');
+      }
+      return;
+    }
+
+    resources.load(`${this.petIconPathPrefix}${tile.petType}`, SpriteFrame, (error, frame) => {
+      if (error || !frame) {
+        this.iconCache.set(tile.petType, null);
+        return;
+      }
+
+      this.iconCache.set(tile.petType, frame);
+      if (item.isValid) {
+        const dynamicSprite = item.getComponent(Sprite);
+        dynamicSprite && (dynamicSprite.spriteFrame = frame);
+        const dynamicLabel = item.getComponentInChildren(Label);
+        dynamicLabel && (dynamicLabel.string = '');
+      }
     });
   }
 
