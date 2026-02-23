@@ -3,7 +3,7 @@ import { BoardManager } from './BoardManager';
 import { SlotManager } from './SlotManager';
 import { EconomyManager } from './EconomyManager';
 import { LevelManager } from './LevelManager';
-import { TileData } from './GameTypes';
+import { LevelConfig, TileData } from './GameTypes';
 
 const { ccclass, property } = _decorator;
 
@@ -17,6 +17,7 @@ export class GameController extends Component {
   private state: GameState = 'ready';
   private currentLevelId = 1;
   private comboCount = 0;
+  private initialized = false;
 
   private boardManager = new BoardManager();
   private slotManager = new SlotManager();
@@ -25,8 +26,26 @@ export class GameController extends Component {
   private eventTarget = new EventTarget();
 
   protected onLoad(): void {
-    this.levelManager.levelsAsset = this.levelsAsset;
-    this.levelManager.init();
+    if (this.levelsAsset) {
+      this.initializeWithAsset(this.levelsAsset);
+    }
+  }
+
+  public initializeWithAsset(levelsAsset: JsonAsset): void {
+    this.levelsAsset = levelsAsset;
+    this.initializeWithData(levelsAsset.json as { levels: LevelConfig[] });
+  }
+
+  public initializeWithData(payload: { levels: LevelConfig[] }): void {
+    this.levelManager.loadFromData(payload);
+    this.initialized = this.levelManager.getMaxLevelId() > 0;
+
+    if (!this.initialized) {
+      this.state = 'ready';
+      this.emitChanged();
+      return;
+    }
+
     this.startLevel(1);
   }
 
@@ -39,6 +58,10 @@ export class GameController extends Component {
   }
 
   public startLevel(levelId: number): void {
+    if (!this.initialized) {
+      return;
+    }
+
     const level = this.levelManager.getLevel(levelId);
     this.currentLevelId = levelId;
     this.comboCount = 0;
