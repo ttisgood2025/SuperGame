@@ -15,7 +15,15 @@ export class LevelManager {
   private levels: LevelConfig[] = [];
 
   public init(): void {
-    const payload = this.levelsAsset?.json as LevelsPayload | undefined;
+    if (!this.levelsAsset) {
+      this.levels = [];
+      return;
+    }
+
+    this.loadFromData(this.levelsAsset.json as LevelsPayload);
+  }
+
+  public loadFromData(payload: LevelsPayload): void {
     this.levels = payload?.levels ?? [];
   }
 
