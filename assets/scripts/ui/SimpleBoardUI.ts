@@ -1,4 +1,4 @@
-import { _decorator, Button, Color, Component, EventTouch, instantiate, Label, Layout, Node, Prefab, Sprite, UITransform } from 'cc';
+import { _decorator, Button, Color, Component, instantiate, Label, Layout, Node, Prefab, Sprite, UITransform } from 'cc';
 import { GameController } from '../core/GameController';
 import { TileData } from '../core/GameTypes';
 
@@ -34,11 +34,11 @@ export class SimpleBoardUI extends Component {
   public restartButton: Button | null = null;
 
   private subscribed = false;
+  private autoNextScheduled = false;
 
   protected onLoad(): void {
     this.nextLevelButton?.node.on(Button.EventType.CLICK, this.onNextLevel, this);
     this.restartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
-    this.node.on(Node.EventType.TOUCH_END, this.onTapAnywhere, this);
   }
 
   protected start(): void {
@@ -49,7 +49,6 @@ export class SimpleBoardUI extends Component {
   protected onDestroy(): void {
     this.nextLevelButton?.node.off(Button.EventType.CLICK, this.onNextLevel, this);
     this.restartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
-    this.node.off(Node.EventType.TOUCH_END, this.onTapAnywhere, this);
 
     if (this.subscribed && this.gameController) {
       this.gameController.offChanged(this.refresh, this);
@@ -76,12 +75,6 @@ export class SimpleBoardUI extends Component {
     this.gameController?.restartLevel();
   }
 
-  private onTapAnywhere(_event: EventTouch): void {
-    if (this.gameController?.getState() === 'win') {
-      this.gameController.startNextLevel();
-    }
-  }
-
   private refresh(): void {
     if (!this.gameController) {
       return;
@@ -94,7 +87,7 @@ export class SimpleBoardUI extends Component {
     const slots = this.gameController.getSlotSnapshot();
 
     if (this.statusLabel) {
-      const suffix = state === 'win' && levelId < maxLevelId ? '（点击任意处或按钮进入下一关）' : '';
+      const suffix = state === 'win' && levelId < maxLevelId ? '（即将自动进入下一关）' : '';
       this.statusLabel.string = `状态：${state} | 剩余牌：${this.gameController.getRemainingTileCount()}${suffix}`;
     }
 
@@ -116,7 +109,27 @@ export class SimpleBoardUI extends Component {
       this.nextLevelButton.node.active = canNext;
     }
 
+    if (state === 'win' && levelId < maxLevelId) {
+      this.scheduleAutoNext();
+    } else {
+      this.autoNextScheduled = false;
+    }
+
     this.renderTiles(this.gameController.getClickableTiles());
+  }
+
+  private scheduleAutoNext(): void {
+    if (this.autoNextScheduled) {
+      return;
+    }
+
+    this.autoNextScheduled = true;
+    this.scheduleOnce(() => {
+      if (this.gameController?.getState() === 'win') {
+        this.gameController.startNextLevel();
+      }
+      this.autoNextScheduled = false;
+    }, 0.6);
   }
 
   private renderTiles(tiles: TileData[]): void {

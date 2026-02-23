@@ -39,12 +39,3 @@
 
 ## 开发复盘与标准化指南
 - `docs/standardized-dev-guide.md`：从 0 到当前可运行状态的最简 SOP、踩坑复盘与排障清单。
-
-## 已修复导入问题
-- `assets/scripts/core` 现已自包含 `GameTypes.ts` 与 `LevelGenerator.ts`。
-- 仅复制 `assets/` 到新建 Cocos 工程即可，不再依赖 `../../../src/*` 路径。
-
-
-## 运行后若只看到黑底和按钮
-- 这说明当前场景是“静态 UI”，还未绑定动态牌面渲染。
-- 请按 `docs/setup-cocos.md` 第 5~6 步绑定 `SimpleBoardUI + TileContainer + TileItem`。
