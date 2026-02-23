@@ -1,0 +1,14 @@
+# Cocos Creator
+library/
+temp/
+local/
+profiles/
+settings/
+
+# Build outputs
+build/
+dist/
+
+# Node/TS
+node_modules/
+*.log
