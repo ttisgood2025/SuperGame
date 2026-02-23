@@ -1,0 +1,604 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "chapter": 1,
+      "petTypes": 6,
+      "totalTiles": 36,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 2,
+      "chapter": 1,
+      "petTypes": 6,
+      "totalTiles": 36,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 3,
+      "chapter": 1,
+      "petTypes": 6,
+      "totalTiles": 36,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 4,
+      "chapter": 1,
+      "petTypes": 6,
+      "totalTiles": 42,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 5,
+      "chapter": 1,
+      "petTypes": 7,
+      "totalTiles": 42,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 6,
+      "chapter": 1,
+      "petTypes": 7,
+      "totalTiles": 42,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 7,
+      "chapter": 1,
+      "petTypes": 7,
+      "totalTiles": 48,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 8,
+      "chapter": 1,
+      "petTypes": 7,
+      "totalTiles": 48,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 9,
+      "chapter": 1,
+      "petTypes": 8,
+      "totalTiles": 48,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 10,
+      "chapter": 1,
+      "petTypes": 8,
+      "totalTiles": 54,
+      "layers": 2,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 11,
+      "chapter": 1,
+      "petTypes": 8,
+      "totalTiles": 54,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 12,
+      "chapter": 1,
+      "petTypes": 8,
+      "totalTiles": 54,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 13,
+      "chapter": 1,
+      "petTypes": 9,
+      "totalTiles": 60,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 14,
+      "chapter": 1,
+      "petTypes": 9,
+      "totalTiles": 60,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 15,
+      "chapter": 1,
+      "petTypes": 9,
+      "totalTiles": 60,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0,
+      "target": "clear_all"
+    },
+    {
+      "id": 16,
+      "chapter": 2,
+      "petTypes": 9,
+      "totalTiles": 66,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0.005,
+      "target": "clear_all"
+    },
+    {
+      "id": 17,
+      "chapter": 2,
+      "petTypes": 10,
+      "totalTiles": 66,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0.01,
+      "target": "clear_all"
+    },
+    {
+      "id": 18,
+      "chapter": 2,
+      "petTypes": 10,
+      "totalTiles": 66,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0.015,
+      "target": "clear_all"
+    },
+    {
+      "id": 19,
+      "chapter": 2,
+      "petTypes": 10,
+      "totalTiles": 72,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0.02,
+      "target": "clear_all"
+    },
+    {
+      "id": 20,
+      "chapter": 2,
+      "petTypes": 10,
+      "totalTiles": 72,
+      "layers": 3,
+      "slotCapacity": 7,
+      "obstacleRate": 0.025,
+      "target": "clear_all"
+    },
+    {
+      "id": 21,
+      "chapter": 2,
+      "petTypes": 11,
+      "totalTiles": 72,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.03,
+      "target": "clear_all"
+    },
+    {
+      "id": 22,
+      "chapter": 2,
+      "petTypes": 11,
+      "totalTiles": 78,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.035,
+      "target": "clear_all"
+    },
+    {
+      "id": 23,
+      "chapter": 2,
+      "petTypes": 11,
+      "totalTiles": 78,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.04,
+      "target": "clear_all"
+    },
+    {
+      "id": 24,
+      "chapter": 2,
+      "petTypes": 11,
+      "totalTiles": 78,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.045,
+      "target": "clear_all"
+    },
+    {
+      "id": 25,
+      "chapter": 2,
+      "petTypes": 12,
+      "totalTiles": 84,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.05,
+      "target": "clear_all"
+    },
+    {
+      "id": 26,
+      "chapter": 2,
+      "petTypes": 12,
+      "totalTiles": 84,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.055,
+      "target": "clear_all"
+    },
+    {
+      "id": 27,
+      "chapter": 2,
+      "petTypes": 12,
+      "totalTiles": 84,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.06,
+      "target": "clear_all"
+    },
+    {
+      "id": 28,
+      "chapter": 2,
+      "petTypes": 12,
+      "totalTiles": 90,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.065,
+      "target": "clear_all"
+    },
+    {
+      "id": 29,
+      "chapter": 2,
+      "petTypes": 13,
+      "totalTiles": 90,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.07,
+      "target": "clear_all"
+    },
+    {
+      "id": 30,
+      "chapter": 2,
+      "petTypes": 13,
+      "totalTiles": 90,
+      "layers": 4,
+      "slotCapacity": 7,
+      "obstacleRate": 0.075,
+      "target": "clear_all"
+    },
+    {
+      "id": 31,
+      "chapter": 3,
+      "petTypes": 13,
+      "totalTiles": 96,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.08,
+      "target": "clear_all"
+    },
+    {
+      "id": 32,
+      "chapter": 3,
+      "petTypes": 13,
+      "totalTiles": 96,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.085,
+      "target": "clear_all"
+    },
+    {
+      "id": 33,
+      "chapter": 3,
+      "petTypes": 14,
+      "totalTiles": 96,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.09,
+      "target": "clear_all"
+    },
+    {
+      "id": 34,
+      "chapter": 3,
+      "petTypes": 14,
+      "totalTiles": 102,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.095,
+      "target": "clear_all"
+    },
+    {
+      "id": 35,
+      "chapter": 3,
+      "petTypes": 14,
+      "totalTiles": 102,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.1,
+      "target": "clear_all"
+    },
+    {
+      "id": 36,
+      "chapter": 3,
+      "petTypes": 14,
+      "totalTiles": 102,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.105,
+      "target": "clear_all"
+    },
+    {
+      "id": 37,
+      "chapter": 3,
+      "petTypes": 15,
+      "totalTiles": 108,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.11,
+      "target": "clear_all"
+    },
+    {
+      "id": 38,
+      "chapter": 3,
+      "petTypes": 15,
+      "totalTiles": 108,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.115,
+      "target": "clear_all"
+    },
+    {
+      "id": 39,
+      "chapter": 3,
+      "petTypes": 15,
+      "totalTiles": 108,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.12,
+      "target": "clear_all"
+    },
+    {
+      "id": 40,
+      "chapter": 3,
+      "petTypes": 15,
+      "totalTiles": 114,
+      "layers": 5,
+      "slotCapacity": 7,
+      "obstacleRate": 0.125,
+      "target": "clear_all"
+    },
+    {
+      "id": 41,
+      "chapter": 3,
+      "petTypes": 16,
+      "totalTiles": 114,
+      "layers": 6,
+      "slotCapacity": 7,
+      "obstacleRate": 0.13,
+      "target": "clear_all"
+    },
+    {
+      "id": 42,
+      "chapter": 3,
+      "petTypes": 16,
+      "totalTiles": 114,
+      "layers": 6,
+      "slotCapacity": 7,
+      "obstacleRate": 0.135,
+      "target": "clear_all"
+    },
+    {
+      "id": 43,
+      "chapter": 3,
+      "petTypes": 16,
+      "totalTiles": 120,
+      "layers": 6,
+      "slotCapacity": 7,
+      "obstacleRate": 0.14,
+      "target": "clear_all"
+    },
+    {
+      "id": 44,
+      "chapter": 3,
+      "petTypes": 16,
+      "totalTiles": 120,
+      "layers": 6,
+      "slotCapacity": 7,
+      "obstacleRate": 0.145,
+      "target": "clear_all"
+    },
+    {
+      "id": 45,
+      "chapter": 3,
+      "petTypes": 17,
+      "totalTiles": 120,
+      "layers": 6,
+      "slotCapacity": 7,
+      "obstacleRate": 0.15,
+      "target": "clear_all"
+    },
+    {
+      "id": 46,
+      "chapter": 4,
+      "petTypes": 17,
+      "totalTiles": 126,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.155,
+      "target": "clear_all"
+    },
+    {
+      "id": 47,
+      "chapter": 4,
+      "petTypes": 17,
+      "totalTiles": 126,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.16,
+      "target": "clear_all"
+    },
+    {
+      "id": 48,
+      "chapter": 4,
+      "petTypes": 17,
+      "totalTiles": 126,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.165,
+      "target": "clear_all"
+    },
+    {
+      "id": 49,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 132,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.17,
+      "target": "clear_all"
+    },
+    {
+      "id": 50,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 132,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.175,
+      "target": "clear_all"
+    },
+    {
+      "id": 51,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 132,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.18,
+      "target": "clear_all"
+    },
+    {
+      "id": 52,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 138,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.185,
+      "target": "clear_all"
+    },
+    {
+      "id": 53,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 138,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.19,
+      "target": "clear_all"
+    },
+    {
+      "id": 54,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 138,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.195,
+      "target": "clear_all"
+    },
+    {
+      "id": 55,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 144,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    },
+    {
+      "id": 56,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 144,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    },
+    {
+      "id": 57,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 144,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    },
+    {
+      "id": 58,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 150,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    },
+    {
+      "id": 59,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 150,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    },
+    {
+      "id": 60,
+      "chapter": 4,
+      "petTypes": 18,
+      "totalTiles": 150,
+      "layers": 6,
+      "slotCapacity": 6,
+      "obstacleRate": 0.2,
+      "target": "clear_all"
+    }
+  ]
+}
