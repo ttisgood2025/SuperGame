@@ -21,6 +21,13 @@
 2. 将本仓库 `assets/` 内容拷贝进项目。
 3. 选中主场景 `Canvas`，挂载 `QuickStartLauncher`。
 4. 点击运行（无需再手动拖拽绑定 `GameController` 和 UI 字段）。
+## 核心卖点
+- **三叠消除 + 轻策略**：玩家点击上层宠物卡牌，卡牌进入底部槽位，凑齐 3 张同图案即消除。
+- **60 关关卡推进**：分为 4 个章节，难度递增，包含障碍、限步、目标类型变化。
+- **上瘾循环机制**：短局（1-3 分钟）→ 奖励反馈 → 轻成长（皮肤、家园装饰）→ 再挑战。
+- **萌宠 2D 美术风格**：猫、狗、兔、熊猫等宠物头像，圆角、柔色、高反馈特效。
+
+
 
 ## 开发检查命令
 - `python -m json.tool config/levels.json >/dev/null`
@@ -32,3 +39,12 @@
 
 ## 开发复盘与标准化指南
 - `docs/standardized-dev-guide.md`：从 0 到当前可运行状态的最简 SOP、踩坑复盘与排障清单。
+
+## 已修复导入问题
+- `assets/scripts/core` 现已自包含 `GameTypes.ts` 与 `LevelGenerator.ts`。
+- 仅复制 `assets/` 到新建 Cocos 工程即可，不再依赖 `../../../src/*` 路径。
+
+
+## 运行后若只看到黑底和按钮
+- 这说明当前场景是“静态 UI”，还未绑定动态牌面渲染。
+- 请按 `docs/setup-cocos.md` 第 5~6 步绑定 `SimpleBoardUI + TileContainer + TileItem`。
