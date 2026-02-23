@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Label, Layout, Node, Prefab } from 'cc';
+import { _decorator, Button, Color, Component, instantiate, Label, Layout, Node, Prefab, Sprite, UITransform } from 'cc';
 import { GameController } from '../core/GameController';
 import { TileData } from '../core/GameTypes';
 
@@ -86,7 +86,7 @@ export class SimpleBoardUI extends Component {
   }
 
   private renderTiles(tiles: TileData[]): void {
-    if (!this.tileContainer || !this.tilePrefab) {
+    if (!this.tileContainer) {
       return;
     }
 
@@ -98,7 +98,7 @@ export class SimpleBoardUI extends Component {
     }
 
     tiles.slice(0, 24).forEach((tile) => {
-      const item = instantiate(this.tilePrefab);
+      const item = this.tilePrefab ? instantiate(this.tilePrefab) : this.createDefaultTileItem();
       const label = item.getComponentInChildren(Label);
       if (label) {
         label.string = `${tile.petType}`;
@@ -113,5 +113,28 @@ export class SimpleBoardUI extends Component {
 
       this.tileContainer?.addChild(item);
     });
+  }
+
+  private createDefaultTileItem(): Node {
+    const node = new Node('TileItem');
+    const ui = node.addComponent(UITransform);
+    ui.setContentSize(72, 72);
+
+    const sprite = node.addComponent(Sprite);
+    sprite.color = new Color(245, 234, 199, 255);
+
+    node.addComponent(Button);
+
+    const labelNode = new Node('Label');
+    const labelUi = labelNode.addComponent(UITransform);
+    labelUi.setContentSize(72, 72);
+    const label = labelNode.addComponent(Label);
+    label.fontSize = 28;
+    label.lineHeight = 32;
+    label.horizontalAlign = Label.HorizontalAlign.CENTER;
+    label.verticalAlign = Label.VerticalAlign.CENTER;
+    node.addChild(labelNode);
+
+    return node;
   }
 }

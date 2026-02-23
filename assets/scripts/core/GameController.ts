@@ -17,6 +17,7 @@ export class GameController extends Component {
   private state: GameState = 'ready';
   private currentLevelId = 1;
   private comboCount = 0;
+  private initialized = false;
 
   private boardManager = new BoardManager();
   private slotManager = new SlotManager();
@@ -25,8 +26,15 @@ export class GameController extends Component {
   private eventTarget = new EventTarget();
 
   protected onLoad(): void {
-    this.levelManager.levelsAsset = this.levelsAsset;
-    this.levelManager.init();
+    if (this.levelsAsset) {
+      this.initializeWithAsset(this.levelsAsset);
+    }
+  }
+
+  public initializeWithAsset(levelsAsset: JsonAsset): void {
+    this.levelsAsset = levelsAsset;
+    this.levelManager.loadFromData(levelsAsset.json as { levels: any[] });
+    this.initialized = true;
     this.startLevel(1);
   }
 
@@ -39,6 +47,10 @@ export class GameController extends Component {
   }
 
   public startLevel(levelId: number): void {
+    if (!this.initialized) {
+      return;
+    }
+
     const level = this.levelManager.getLevel(levelId);
     this.currentLevelId = levelId;
     this.comboCount = 0;
