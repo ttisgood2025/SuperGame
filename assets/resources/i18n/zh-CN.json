@@ -1,0 +1,8 @@
+{
+  "start": "开始闯关",
+  "win": "闯关成功！",
+  "lose": "差一点，再试一次～",
+  "revive": "立即复活",
+  "combo": "连消 x{count}",
+  "chapter_unlock": "已解锁第 {chapter} 章"
+}
