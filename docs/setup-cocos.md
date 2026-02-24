@@ -29,6 +29,7 @@
 
 ### 自定义
 - 可在 `SimpleBoardUI.petIconPathPrefix` 改前缀路径。
+- 若图片显示过大：把 `SimpleBoardUI.tileSize` 调整为 `72`（或 64/80），并确认 prefab 节点有 `UITransform`。
 
 ## C. 失败画面策略
 - 当前已内置失败弹层（LosePanel）。

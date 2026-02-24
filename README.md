@@ -48,3 +48,5 @@
 
 ## 图片资源导入核对
 - `docs/image-import-checklist.md`：Cocos 资源面板 Importer 参数与运行时加载排查清单。
+
+- 若卡牌图过大：在 `SimpleBoardUI.tileSize` 调整卡牌渲染尺寸（默认 72）。

@@ -50,6 +50,9 @@ export class SimpleBoardUI extends Component {
   @property({ tooltip: '宠物图标资源前缀，最终路径示例：resources/sprites/pets/pet_1.png -> sprites/pets/pet_1' })
   public petIconPathPrefix = 'sprites/pets/pet_';
 
+  @property({ tooltip: '卡牌渲染尺寸（像素）' })
+  public tileSize = 72;
+
   @property(Node)
   public losePanel: Node | null = null;
 
@@ -213,6 +216,7 @@ export class SimpleBoardUI extends Component {
 
     tiles.slice(0, 24).forEach((tile) => {
       const item = this.tilePrefab ? instantiate(this.tilePrefab) : this.createDefaultTileItem();
+      this.normalizeTileNode(item);
       this.applyTileVisual(item, tile);
 
       const button = item.getComponent(Button);
@@ -226,6 +230,24 @@ export class SimpleBoardUI extends Component {
     });
   }
 
+  private normalizeTileNode(item: Node): void {
+    let itemTransform = item.getComponent(UITransform);
+    if (!itemTransform) {
+      itemTransform = item.addComponent(UITransform);
+    }
+    itemTransform.setContentSize(this.tileSize, this.tileSize);
+
+    const label = item.getComponentInChildren(Label);
+    const labelNode = label?.node;
+    if (labelNode) {
+      let labelTransform = labelNode.getComponent(UITransform);
+      if (!labelTransform) {
+        labelTransform = labelNode.addComponent(UITransform);
+      }
+      labelTransform.setContentSize(this.tileSize, this.tileSize);
+    }
+  }
+
   private applyTileVisual(item: Node, tile: TileData): void {
     const label = item.getComponentInChildren(Label);
     if (label) {
@@ -237,6 +259,8 @@ export class SimpleBoardUI extends Component {
     if (!sprite) {
       return;
     }
+
+    sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
     const cached = this.iconCache.get(tile.petType);
     if (cached !== undefined) {
@@ -260,7 +284,10 @@ export class SimpleBoardUI extends Component {
 
       if (item.isValid) {
         const dynamicSprite = item.getComponent(Sprite);
-        dynamicSprite && (dynamicSprite.spriteFrame = frame);
+        if (dynamicSprite) {
+          dynamicSprite.sizeMode = Sprite.SizeMode.CUSTOM;
+          dynamicSprite.spriteFrame = frame;
+        }
         const dynamicLabel = item.getComponentInChildren(Label);
         dynamicLabel && (dynamicLabel.string = '');
       }
@@ -286,7 +313,7 @@ export class SimpleBoardUI extends Component {
   private createDefaultTileItem(): Node {
     const node = new Node('TileItem');
     const ui = node.addComponent(UITransform);
-    ui.setContentSize(72, 72);
+    ui.setContentSize(this.tileSize, this.tileSize);
 
     const sprite = node.addComponent(Sprite);
     sprite.color = new Color(245, 234, 199, 255);
@@ -295,7 +322,7 @@ export class SimpleBoardUI extends Component {
 
     const labelNode = new Node('Label');
     const labelUi = labelNode.addComponent(UITransform);
-    labelUi.setContentSize(72, 72);
+    labelUi.setContentSize(this.tileSize, this.tileSize);
     const label = labelNode.addComponent(Label);
     label.fontSize = 28;
     label.lineHeight = 32;
