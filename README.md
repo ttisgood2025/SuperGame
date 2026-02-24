@@ -43,10 +43,15 @@
 - `SimpleBoardUI` 默认会按 `sprites/pets/pet_{petType}` 自动加载；若导入结构差异，还会回退尝试 `.../spriteFrame` 子路径。
 
 ## 失败反馈
-- 已内置失败弹层（LosePanel）：失败时显示“闯关失败 + 再来一局”，点击后立即重开本关（已修复按钮绑定时机）。
+- 已内置高对比失败弹层（LosePanel）：失败时显示“闯关失败 + 立即重开，再冲一次”，点击后立即重开本关。
 
 
 ## 图片资源导入核对
 - `docs/image-import-checklist.md`：Cocos 资源面板 Importer 参数与运行时加载排查清单。
 
 - 若卡牌图过大：在 `SimpleBoardUI.tileSize` 调整卡牌渲染尺寸（默认 72）。
+
+
+## 槽位显示
+- 槽位会优先显示宠物图片（不是数字）；仅在图片缺失时回退数字。
+- 可用 `SimpleBoardUI.slotItemSize` 调整槽位图标尺寸。

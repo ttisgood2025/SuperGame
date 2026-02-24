@@ -34,12 +34,24 @@ export class QuickStartLauncher extends Component {
     const statusLabel = this.createLabel('StatusLabel', new Vec3(0, 300, 0), '状态：加载中');
     const levelLabel = this.createLabel('LevelLabel', new Vec3(-260, 360, 0), `关卡 ${this.startLevelId}/60`);
     const walletLabel = this.createLabel('WalletLabel', new Vec3(230, 360, 0), '金币 0 | 星星 0');
-    const slotLabel = this.createLabel('SlotLabel', new Vec3(0, -250, 0), '槽位：空');
+    const slotLabel = this.createLabel('SlotLabel', new Vec3(0, -220, 0), '槽位（0）');
 
     uiRoot.addChild(statusLabel);
     uiRoot.addChild(levelLabel);
     uiRoot.addChild(walletLabel);
     uiRoot.addChild(slotLabel);
+
+    const slotContainer = new Node('SlotContainer');
+    slotContainer.setPosition(new Vec3(0, -285, 0));
+    const slotTransform = slotContainer.addComponent(UITransform);
+    slotTransform.setContentSize(560, 80);
+    const slotLayout = slotContainer.addComponent(Layout);
+    slotLayout.type = Layout.Type.HORIZONTAL;
+    slotLayout.resizeMode = Layout.ResizeMode.CONTAINER;
+    slotLayout.spacingX = 8;
+    slotLayout.paddingLeft = 8;
+    slotLayout.paddingRight = 8;
+    uiRoot.addChild(slotContainer);
 
     const tileContainer = new Node('TileContainer');
     tileContainer.setPosition(new Vec3(0, 40, 0));
@@ -57,8 +69,8 @@ export class QuickStartLauncher extends Component {
     layout.paddingRight = 8;
     uiRoot.addChild(tileContainer);
 
-    const nextButtonNode = this.createButton('NextLevelButton', new Vec3(210, -300, 0), '下一关');
-    const restartButtonNode = this.createButton('RestartButton', new Vec3(-210, -300, 0), '重开本关');
+    const nextButtonNode = this.createButton('NextLevelButton', new Vec3(210, -360, 0), '下一关');
+    const restartButtonNode = this.createButton('RestartButton', new Vec3(-210, -360, 0), '重开本关');
     uiRoot.addChild(nextButtonNode);
     uiRoot.addChild(restartButtonNode);
 
@@ -72,6 +84,7 @@ export class QuickStartLauncher extends Component {
     simpleBoardUI.levelLabel = levelLabel.getComponent(Label);
     simpleBoardUI.walletLabel = walletLabel.getComponent(Label);
     simpleBoardUI.slotLabel = slotLabel.getComponent(Label);
+    simpleBoardUI.slotContainer = slotContainer;
     simpleBoardUI.nextLevelButton = nextButtonNode.getComponent(Button);
     simpleBoardUI.restartButton = restartButtonNode.getComponent(Button);
     simpleBoardUI.losePanel = losePanel.root;
@@ -117,32 +130,48 @@ export class QuickStartLauncher extends Component {
     root.active = false;
 
     const rootUI = root.addComponent(UITransform);
-    rootUI.setContentSize(650, 500);
+    rootUI.setContentSize(900, 1600);
     root.setPosition(new Vec3(0, 0, 0));
 
-    const bg = root.addComponent(Sprite);
-    bg.color = new Color(30, 30, 30, 220);
+    const overlay = root.addComponent(Sprite);
+    overlay.color = new Color(0, 0, 0, 180);
 
-    const titleNode = this.createLabel('LoseTitle', new Vec3(0, 120, 0), '闯关失败');
+    const card = new Node('LoseCard');
+    const cardUI = card.addComponent(UITransform);
+    cardUI.setContentSize(560, 360);
+    card.setPosition(new Vec3(0, 0, 0));
+    const cardBg = card.addComponent(Sprite);
+    cardBg.color = new Color(255, 245, 232, 255);
+
+    const titleNode = this.createLabel('LoseTitle', new Vec3(0, 95, 0), '闯关失败');
     const title = titleNode.getComponent(Label);
     if (title) {
-      title.fontSize = 48;
-      title.color = new Color(255, 163, 163, 255);
+      title.fontSize = 52;
+      title.lineHeight = 56;
+      title.color = new Color(210, 62, 62, 255);
     }
 
-    const descNode = this.createLabel('LoseDesc', new Vec3(0, 40, 0), '差一点就过了！再来一局');
+    const descNode = this.createLabel('LoseDesc', new Vec3(0, 20, 0), '差一点就过了！');
     const desc = descNode.getComponent(Label);
     if (desc) {
       desc.fontSize = 30;
       desc.lineHeight = 36;
+      desc.color = new Color(55, 55, 55, 255);
     }
 
-    const restartNode = this.createButton('LoseRestartButton', new Vec3(0, -90, 0), '再来一局');
+    const restartNode = this.createButton(
+      'LoseRestartButton',
+      new Vec3(0, -95, 0),
+      '立即重开，再冲一次',
+      new Color(255, 146, 74, 255),
+      new Color(255, 255, 255, 255),
+    );
     const restartButton = restartNode.getComponent(Button);
 
-    root.addChild(titleNode);
-    root.addChild(descNode);
-    root.addChild(restartNode);
+    card.addChild(titleNode);
+    card.addChild(descNode);
+    card.addChild(restartNode);
+    root.addChild(card);
 
     return { root, title, desc, restartButton };
   }
@@ -164,22 +193,29 @@ export class QuickStartLauncher extends Component {
     return node;
   }
 
-  private createButton(name: string, position: Vec3, text: string): Node {
+  private createButton(
+    name: string,
+    position: Vec3,
+    text: string,
+    bgColor = new Color(219, 219, 219, 255),
+    textColor = new Color(20, 20, 20, 255),
+  ): Node {
     const node = new Node(name);
     const ui = node.addComponent(UITransform);
-    ui.setContentSize(220, 72);
+    ui.setContentSize(260, 78);
     node.setPosition(position);
 
     const sprite = node.addComponent(Sprite);
-    sprite.color = new Color(219, 219, 219, 255);
+    sprite.color = bgColor;
 
     node.addComponent(Button);
 
     const labelNode = this.createLabel(`${name}Label`, new Vec3(0, 0, 0), text);
     const label = labelNode.getComponent(Label);
     if (label) {
-      label.color = new Color(20, 20, 20, 255);
-      label.fontSize = 30;
+      label.color = textColor;
+      label.fontSize = 28;
+      label.lineHeight = 32;
     }
     node.addChild(labelNode);
 

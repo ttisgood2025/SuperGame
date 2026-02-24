@@ -41,6 +41,9 @@ export class SimpleBoardUI extends Component {
   @property(Label)
   public slotLabel: Label | null = null;
 
+  @property(Node)
+  public slotContainer: Node | null = null;
+
   @property(Button)
   public nextLevelButton: Button | null = null;
 
@@ -52,6 +55,9 @@ export class SimpleBoardUI extends Component {
 
   @property({ tooltip: '卡牌渲染尺寸（像素）' })
   public tileSize = 72;
+
+  @property({ tooltip: '槽位卡牌尺寸（像素）' })
+  public slotItemSize = 56;
 
   @property(Node)
   public losePanel: Node | null = null;
@@ -153,8 +159,10 @@ export class SimpleBoardUI extends Component {
     }
 
     if (this.slotLabel) {
-      this.slotLabel.string = `槽位：${slots.join(' , ') || '空'}`;
+      this.slotLabel.string = `槽位（${slots.length}）`;
     }
+
+    this.renderSlotItems(slots);
 
     if (this.nextLevelButton) {
       const canNext = state === 'win' && levelId < maxLevelId;
@@ -171,6 +179,43 @@ export class SimpleBoardUI extends Component {
     }
 
     this.renderTiles(this.gameController.getClickableTiles());
+  }
+
+  private renderSlotItems(slots: number[]): void {
+    if (!this.slotContainer) {
+      return;
+    }
+
+    this.slotContainer.removeAllChildren();
+
+    for (const petType of slots) {
+      const item = this.createSlotItem();
+      this.applyPetVisual(item, petType, true);
+      this.slotContainer.addChild(item);
+    }
+  }
+
+  private createSlotItem(): Node {
+    const node = new Node('SlotItem');
+    const ui = node.addComponent(UITransform);
+    ui.setContentSize(this.slotItemSize, this.slotItemSize);
+
+    const sprite = node.addComponent(Sprite);
+    sprite.color = new Color(240, 240, 240, 255);
+    sprite.sizeMode = Sprite.SizeMode.CUSTOM;
+
+    const labelNode = new Node('Label');
+    const labelUi = labelNode.addComponent(UITransform);
+    labelUi.setContentSize(this.slotItemSize, this.slotItemSize);
+    const label = labelNode.addComponent(Label);
+    label.fontSize = 24;
+    label.lineHeight = 28;
+    label.horizontalAlign = Label.HorizontalAlign.CENTER;
+    label.verticalAlign = Label.VerticalAlign.CENTER;
+    label.color = new Color(30, 30, 30, 255);
+    node.addChild(labelNode);
+
+    return node;
   }
 
   private updateLosePanel(state: string, levelId: number): void {
@@ -217,7 +262,7 @@ export class SimpleBoardUI extends Component {
     tiles.slice(0, 24).forEach((tile) => {
       const item = this.tilePrefab ? instantiate(this.tilePrefab) : this.createDefaultTileItem();
       this.normalizeTileNode(item);
-      this.applyTileVisual(item, tile);
+      this.applyPetVisual(item, tile.petType, false);
 
       const button = item.getComponent(Button);
       if (button) {
@@ -246,13 +291,18 @@ export class SimpleBoardUI extends Component {
       }
       labelTransform.setContentSize(this.tileSize, this.tileSize);
     }
+
+    const sprite = item.getComponent(Sprite);
+    if (sprite) {
+      sprite.sizeMode = Sprite.SizeMode.CUSTOM;
+    }
   }
 
-  private applyTileVisual(item: Node, tile: TileData): void {
+  private applyPetVisual(item: Node, petType: number, isSlot: boolean): void {
     const label = item.getComponentInChildren(Label);
     if (label) {
-      label.string = `${tile.petType}`;
-      label.color = new Color(35, 35, 35, 255);
+      label.string = `${petType}`;
+      label.color = isSlot ? new Color(30, 30, 30, 255) : new Color(35, 35, 35, 255);
     }
 
     const sprite = item.getComponent(Sprite);
@@ -262,7 +312,7 @@ export class SimpleBoardUI extends Component {
 
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
-    const cached = this.iconCache.get(tile.petType);
+    const cached = this.iconCache.get(petType);
     if (cached !== undefined) {
       if (cached) {
         sprite.spriteFrame = cached;
@@ -272,12 +322,12 @@ export class SimpleBoardUI extends Component {
     }
 
     const tryPaths = [
-      `${this.petIconPathPrefix}${tile.petType}`,
-      `${this.petIconPathPrefix}${tile.petType}/spriteFrame`,
+      `${this.petIconPathPrefix}${petType}`,
+      `${this.petIconPathPrefix}${petType}/spriteFrame`,
     ];
 
     this.tryLoadSpriteFrame(tryPaths, 0, (frame) => {
-      this.iconCache.set(tile.petType, frame);
+      this.iconCache.set(petType, frame);
       if (!frame) {
         return;
       }
@@ -317,6 +367,7 @@ export class SimpleBoardUI extends Component {
 
     const sprite = node.addComponent(Sprite);
     sprite.color = new Color(245, 234, 199, 255);
+    sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
     node.addComponent(Button);
 

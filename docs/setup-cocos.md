@@ -31,12 +31,17 @@
 - 可在 `SimpleBoardUI.petIconPathPrefix` 改前缀路径。
 - 若图片显示过大：把 `SimpleBoardUI.tileSize` 调整为 `72`（或 64/80），并确认 prefab 节点有 `UITransform`。
 
-## C. 失败画面策略
-- 当前已内置失败弹层（LosePanel）。
-- 当状态为 `lose` 时，自动显示“闯关失败 + 再来一局”按钮。
-- 点击“再来一局”会调用 `restartLevel()`，形成快速再开局闭环（本版已修复按钮绑定时机问题）。
+## C. 槽位显示（图片而非数字）
+- 当前槽位会渲染为卡牌小图标（按 `slotContainer` 动态生成）。
+- 若图片缺失，才回退为数字文本。
+- 可在 `SimpleBoardUI.slotItemSize` 调整槽位图标尺寸。
 
-## D. 常见问题
+## D. 失败画面策略
+- 当前已内置高对比失败弹层（LosePanel + 卡片 + 强按钮）。
+- 当状态为 `lose` 时，自动显示“闯关失败 + 立即重开，再冲一次”按钮。
+- 点击按钮会调用 `restartLevel()`，形成快速再开局闭环。
+
+## E. 常见问题
 - 运行后只看到黑底/几个静态按钮：说明还没把动态牌面逻辑绑定上。使用 A 方案可直接规避。
 - 报 `levels` 加载失败：确认文件在 `assets/resources/config/levels.json`。
 - 一直停在“状态：初始化中 / 槽位：空”：通常是旧脚本缓存。请删除项目 `temp/` 和 `library/` 后重开。
