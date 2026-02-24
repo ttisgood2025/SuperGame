@@ -1,0 +1,14 @@
+{
+  "name": "supergame-pet-match",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Cocos Creator 3.8.2 萌宠三叠消除项目骨架",
+  "scripts": {
+    "check:json": "python -m json.tool config/levels.json > /dev/null",
+    "check:resources": "python -m json.tool assets/resources/config/levels.json > /dev/null",
+    "lint:ts": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
