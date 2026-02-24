@@ -65,22 +65,16 @@ export class SimpleBoardUI extends Component {
   private subscribed = false;
   private autoNextScheduled = false;
   private iconCache = new Map<number, SpriteFrame | null>();
-
-  protected onLoad(): void {
-    this.nextLevelButton?.node.on(Button.EventType.CLICK, this.onNextLevel, this);
-    this.restartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
-    this.loseRestartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
-  }
+  private uiBound = false;
 
   protected start(): void {
     this.bindIfPossible();
+    this.bindUiEvents();
     this.refresh();
   }
 
   protected onDestroy(): void {
-    this.nextLevelButton?.node.off(Button.EventType.CLICK, this.onNextLevel, this);
-    this.restartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
-    this.loseRestartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.unbindUiEvents();
 
     if (this.subscribed && this.gameController) {
       this.gameController.offChanged(this.refresh, this);
@@ -89,6 +83,7 @@ export class SimpleBoardUI extends Component {
 
   public setup(): void {
     this.bindIfPossible();
+    this.bindUiEvents();
     this.refresh();
   }
 
@@ -97,6 +92,28 @@ export class SimpleBoardUI extends Component {
       this.gameController.onChanged(this.refresh, this);
       this.subscribed = true;
     }
+  }
+
+  private bindUiEvents(): void {
+    if (this.uiBound) {
+      return;
+    }
+
+    this.nextLevelButton?.node.on(Button.EventType.CLICK, this.onNextLevel, this);
+    this.restartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.loseRestartButton?.node.on(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.uiBound = true;
+  }
+
+  private unbindUiEvents(): void {
+    if (!this.uiBound) {
+      return;
+    }
+
+    this.nextLevelButton?.node.off(Button.EventType.CLICK, this.onNextLevel, this);
+    this.restartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.loseRestartButton?.node.off(Button.EventType.CLICK, this.onRestartLevel, this);
+    this.uiBound = false;
   }
 
   private onNextLevel(): void {
@@ -230,19 +247,39 @@ export class SimpleBoardUI extends Component {
       return;
     }
 
-    resources.load(`${this.petIconPathPrefix}${tile.petType}`, SpriteFrame, (error, frame) => {
-      if (error || !frame) {
-        this.iconCache.set(tile.petType, null);
+    const tryPaths = [
+      `${this.petIconPathPrefix}${tile.petType}`,
+      `${this.petIconPathPrefix}${tile.petType}/spriteFrame`,
+    ];
+
+    this.tryLoadSpriteFrame(tryPaths, 0, (frame) => {
+      this.iconCache.set(tile.petType, frame);
+      if (!frame) {
         return;
       }
 
-      this.iconCache.set(tile.petType, frame);
       if (item.isValid) {
         const dynamicSprite = item.getComponent(Sprite);
         dynamicSprite && (dynamicSprite.spriteFrame = frame);
         const dynamicLabel = item.getComponentInChildren(Label);
         dynamicLabel && (dynamicLabel.string = '');
       }
+    });
+  }
+
+  private tryLoadSpriteFrame(paths: string[], index: number, done: (frame: SpriteFrame | null) => void): void {
+    if (index >= paths.length) {
+      done(null);
+      return;
+    }
+
+    resources.load(paths[index], SpriteFrame, (error, frame) => {
+      if (error || !frame) {
+        this.tryLoadSpriteFrame(paths, index + 1, done);
+        return;
+      }
+
+      done(frame);
     });
   }
 

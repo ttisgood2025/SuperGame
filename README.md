@@ -21,13 +21,6 @@
 2. 将本仓库 `assets/` 内容拷贝进项目。
 3. 选中主场景 `Canvas`，挂载 `QuickStartLauncher`。
 4. 点击运行（无需再手动拖拽绑定 `GameController` 和 UI 字段）。
-## 核心卖点
-- **三叠消除 + 轻策略**：玩家点击上层宠物卡牌，卡牌进入底部槽位，凑齐 3 张同图案即消除。
-- **60 关关卡推进**：分为 4 个章节，难度递增，包含障碍、限步、目标类型变化。
-- **上瘾循环机制**：短局（1-3 分钟）→ 奖励反馈 → 轻成长（皮肤、家园装饰）→ 再挑战。
-- **萌宠 2D 美术风格**：猫、狗、兔、熊猫等宠物头像，圆角、柔色、高反馈特效。
-
-
 
 ## 开发检查命令
 - `python -m json.tool config/levels.json >/dev/null`
@@ -47,7 +40,11 @@
 
 ## 卡牌图片资源
 - 推荐放在 `assets/resources/sprites/pets/`，命名 `pet_1.png`、`pet_2.png` ...
-- `SimpleBoardUI` 默认会按 `sprites/pets/pet_{petType}` 自动加载。
+- `SimpleBoardUI` 默认会按 `sprites/pets/pet_{petType}` 自动加载；若导入结构差异，还会回退尝试 `.../spriteFrame` 子路径。
 
 ## 失败反馈
-- 已内置失败弹层（LosePanel）：失败时显示“闯关失败 + 再来一局”，点击后立即重开本关。
+- 已内置失败弹层（LosePanel）：失败时显示“闯关失败 + 再来一局”，点击后立即重开本关（已修复按钮绑定时机）。
+
+
+## 图片资源导入核对
+- `docs/image-import-checklist.md`：Cocos 资源面板 Importer 参数与运行时加载排查清单。

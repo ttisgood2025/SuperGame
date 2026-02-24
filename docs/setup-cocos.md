@@ -23,7 +23,8 @@
 
 ### 加载规则
 - `SimpleBoardUI` 默认按前缀 `sprites/pets/pet_` 加载 `SpriteFrame`。
-- 例如卡牌类型 `petType=6`，会尝试加载：`resources.load('sprites/pets/pet_6', SpriteFrame)`。
+- 例如卡牌类型 `petType=6`，会优先尝试：`resources.load('sprites/pets/pet_6', SpriteFrame)`。
+- 如果项目导入后 SpriteFrame 挂在子路径，也会自动尝试：`sprites/pets/pet_6/spriteFrame`。
 - 若找不到图片，会自动回退为数字文本显示，不影响可玩性。
 
 ### 自定义
@@ -32,7 +33,7 @@
 ## C. 失败画面策略
 - 当前已内置失败弹层（LosePanel）。
 - 当状态为 `lose` 时，自动显示“闯关失败 + 再来一局”按钮。
-- 点击“再来一局”会调用 `restartLevel()`，形成快速再开局闭环。
+- 点击“再来一局”会调用 `restartLevel()`，形成快速再开局闭环（本版已修复按钮绑定时机问题）。
 
 ## D. 常见问题
 - 运行后只看到黑底/几个静态按钮：说明还没把动态牌面逻辑绑定上。使用 A 方案可直接规避。
