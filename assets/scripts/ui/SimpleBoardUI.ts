@@ -75,10 +75,12 @@ export class SimpleBoardUI extends Component {
   private autoNextScheduled = false;
   private iconCache = new Map<number, SpriteFrame | null>();
   private uiBound = false;
+  private iconDirLoaded = false;
 
   protected start(): void {
     this.bindIfPossible();
     this.bindUiEvents();
+    this.preloadPetIcons();
     this.refresh();
   }
 
@@ -93,7 +95,36 @@ export class SimpleBoardUI extends Component {
   public setup(): void {
     this.bindIfPossible();
     this.bindUiEvents();
+    this.preloadPetIcons();
     this.refresh();
+  }
+
+
+  private preloadPetIcons(): void {
+    if (this.iconDirLoaded) {
+      return;
+    }
+
+    this.iconDirLoaded = true;
+    resources.loadDir('sprites/pets', SpriteFrame, (error, assets) => {
+      if (error || !assets) {
+        return;
+      }
+
+      for (const frame of assets) {
+        const match = frame.name.match(/pet_(\d+)/);
+        if (!match) {
+          continue;
+        }
+
+        const petType = Number(match[1]);
+        if (!Number.isNaN(petType) && !this.iconCache.has(petType)) {
+          this.iconCache.set(petType, frame);
+        }
+      }
+
+      this.refresh();
+    });
   }
 
   private bindIfPossible(): void {
@@ -313,24 +344,25 @@ export class SimpleBoardUI extends Component {
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
     const cached = this.iconCache.get(petType);
-    if (cached !== undefined) {
-      if (cached) {
-        sprite.spriteFrame = cached;
-        label && (label.string = '');
-      }
+    if (cached) {
+      sprite.spriteFrame = cached;
+      label && (label.string = '');
       return;
     }
 
     const tryPaths = [
       `${this.petIconPathPrefix}${petType}`,
       `${this.petIconPathPrefix}${petType}/spriteFrame`,
+      `sprites/pets/pet_${petType}`,
+      `sprites/pets/pet_${petType}/spriteFrame`,
     ];
 
     this.tryLoadSpriteFrame(tryPaths, 0, (frame) => {
-      this.iconCache.set(petType, frame);
       if (!frame) {
         return;
       }
+
+      this.iconCache.set(petType, frame);
 
       if (item.isValid) {
         const dynamicSprite = item.getComponent(Sprite);

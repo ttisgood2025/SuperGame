@@ -32,12 +32,12 @@
 - 若图片显示过大：把 `SimpleBoardUI.tileSize` 调整为 `72`（或 64/80），并确认 prefab 节点有 `UITransform`。
 
 ## C. 槽位显示（图片而非数字）
-- 当前槽位会渲染为卡牌小图标（按 `slotContainer` 动态生成）。
+- 当前槽位会渲染为卡牌小图标（按 `slotContainer` 动态生成，优先读取 resources 图标目录）。
 - 若图片缺失，才回退为数字文本。
 - 可在 `SimpleBoardUI.slotItemSize` 调整槽位图标尺寸。
 
 ## D. 失败画面策略
-- 当前已内置高对比失败弹层（LosePanel + 卡片 + 强按钮）。
+- 当前已内置高对比失败弹层（更深遮罩 + 更亮卡片 + 强对比按钮）。
 - 当状态为 `lose` 时，自动显示“闯关失败 + 立即重开，再冲一次”按钮。
 - 点击按钮会调用 `restartLevel()`，形成快速再开局闭环。
 

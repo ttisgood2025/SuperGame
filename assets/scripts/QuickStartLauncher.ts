@@ -130,40 +130,40 @@ export class QuickStartLauncher extends Component {
     root.active = false;
 
     const rootUI = root.addComponent(UITransform);
-    rootUI.setContentSize(900, 1600);
+    rootUI.setContentSize(1200, 2200);
     root.setPosition(new Vec3(0, 0, 0));
 
     const overlay = root.addComponent(Sprite);
-    overlay.color = new Color(0, 0, 0, 180);
+    overlay.color = new Color(0, 0, 0, 210);
 
     const card = new Node('LoseCard');
     const cardUI = card.addComponent(UITransform);
-    cardUI.setContentSize(560, 360);
+    cardUI.setContentSize(620, 420);
     card.setPosition(new Vec3(0, 0, 0));
     const cardBg = card.addComponent(Sprite);
-    cardBg.color = new Color(255, 245, 232, 255);
+    cardBg.color = new Color(255, 252, 246, 255);
 
-    const titleNode = this.createLabel('LoseTitle', new Vec3(0, 95, 0), '闯关失败');
+    const titleNode = this.createLabel('LoseTitle', new Vec3(0, 120, 0), '闯关失败');
     const title = titleNode.getComponent(Label);
     if (title) {
-      title.fontSize = 52;
-      title.lineHeight = 56;
-      title.color = new Color(210, 62, 62, 255);
+      title.fontSize = 60;
+      title.lineHeight = 66;
+      title.color = new Color(200, 34, 34, 255);
     }
 
-    const descNode = this.createLabel('LoseDesc', new Vec3(0, 20, 0), '差一点就过了！');
+    const descNode = this.createLabel('LoseDesc', new Vec3(0, 30, 0), '差一点就过了！');
     const desc = descNode.getComponent(Label);
     if (desc) {
-      desc.fontSize = 30;
-      desc.lineHeight = 36;
-      desc.color = new Color(55, 55, 55, 255);
+      desc.fontSize = 32;
+      desc.lineHeight = 40;
+      desc.color = new Color(48, 48, 48, 255);
     }
 
     const restartNode = this.createButton(
       'LoseRestartButton',
-      new Vec3(0, -95, 0),
+      new Vec3(0, -120, 0),
       '立即重开，再冲一次',
-      new Color(255, 146, 74, 255),
+      new Color(255, 122, 48, 255),
       new Color(255, 255, 255, 255),
     );
     const restartButton = restartNode.getComponent(Button);
@@ -202,7 +202,7 @@ export class QuickStartLauncher extends Component {
   ): Node {
     const node = new Node(name);
     const ui = node.addComponent(UITransform);
-    ui.setContentSize(260, 78);
+    ui.setContentSize(320, 88);
     node.setPosition(position);
 
     const sprite = node.addComponent(Sprite);
