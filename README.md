@@ -49,7 +49,7 @@
 ## 图片资源导入核对
 - `docs/image-import-checklist.md`：Cocos 资源面板 Importer 参数与运行时加载排查清单。
 
-- 若卡牌图过大：在 `SimpleBoardUI.tileSize` 调整卡牌渲染尺寸（默认 72）。
+- 若卡牌图过大：在 `SimpleBoardUI.tileSize` 调整卡牌渲染尺寸（默认 86）。
 
 
 ## 槽位显示
@@ -58,4 +58,6 @@
 
 
 ## 手机竖屏适配
+- 棋盘列数已固定为每行 7 张（移动端更大卡牌）；如需再调可改 `QuickStartLauncher` 中 `columns`。
+- 背景音乐默认从 `assets/resources/audio/bgm/bgm.mp3` 加载并循环播放（运行时路径 `audio/bgm/bgm`）。
 - 已改为按屏幕尺寸动态布局，移动端会更充分利用可视区域。

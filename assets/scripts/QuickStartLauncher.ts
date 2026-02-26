@@ -3,6 +3,8 @@ import {
   Button,
   Color,
   Component,
+  AudioClip,
+  AudioSource,
   JsonAsset,
   Label,
   Layout,
@@ -68,12 +70,14 @@ export class QuickStartLauncher extends Component {
 
     const spacing = Math.max(6, Math.round(stageW * 0.008));
     const padding = Math.max(6, Math.round(stageW * 0.008));
-    const columns = 6;
+    const columns = 7;
     const cell = Math.floor((tileAreaW - padding * 2 - spacing * (columns - 1)) / columns);
 
     const layout = tileContainer.addComponent(Layout);
     layout.type = Layout.Type.GRID;
     layout.resizeMode = Layout.ResizeMode.CONTAINER;
+    layout.constraint = Layout.Constraint.FIXED_COL;
+    layout.constraintNum = columns;
     layout.cellSize = new Size(cell, cell);
     layout.spacingX = spacing;
     layout.spacingY = spacing;
@@ -107,8 +111,8 @@ export class QuickStartLauncher extends Component {
     simpleBoardUI.loseTitleLabel = losePanel.title;
     simpleBoardUI.loseDescLabel = losePanel.desc;
     simpleBoardUI.loseRestartButton = losePanel.restartButton;
-    simpleBoardUI.tileSize = Math.max(72, Math.min(138, cell));
-    simpleBoardUI.slotItemSize = Math.max(56, Math.floor(simpleBoardUI.tileSize * 0.82));
+    simpleBoardUI.tileSize = Math.max(86, Math.min(158, cell));
+    simpleBoardUI.slotItemSize = Math.max(64, Math.floor(simpleBoardUI.tileSize * 0.86));
 
     gameController.initializeWithData(
       {
@@ -128,6 +132,7 @@ export class QuickStartLauncher extends Component {
       this.startLevelId,
     );
     simpleBoardUI.setup();
+    this.playBackgroundMusic();
 
     resources.load('config/levels', JsonAsset, (error, asset) => {
       if (error || !asset) {
@@ -140,6 +145,23 @@ export class QuickStartLauncher extends Component {
 
       gameController.initializeWithAsset(asset, this.startLevelId);
       simpleBoardUI.setup();
+    });
+  }
+
+  private playBackgroundMusic(): void {
+    const audioNode = new Node('BackgroundMusic');
+    this.node.addChild(audioNode);
+    const source = audioNode.addComponent(AudioSource);
+    source.loop = true;
+    source.playOnAwake = false;
+    source.volume = 0.55;
+
+    resources.load('audio/bgm/bgm', AudioClip, (error, clip) => {
+      if (error || !clip) {
+        return;
+      }
+      source.clip = clip;
+      source.play();
     });
   }
 

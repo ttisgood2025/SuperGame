@@ -51,6 +51,8 @@
 
 
 ## F. 手机竖屏适配（本版已内置）
+- 棋盘网格固定为每行 7 张卡牌，优先保证手机竖屏下单张卡牌更大、更清晰。
+- 已内置背景音乐加载：`assets/resources/audio/bgm/bgm.mp3`（运行时路径 `audio/bgm/bgm`）。
 - `QuickStartLauncher` 会按当前舞台尺寸动态计算：HUD、牌盘区域、按钮、失败弹层大小。
 - 竖屏设备会自动放大可视区域利用率，不再沿用 PC 固定像素布局。
 - 若仍需微调：可在 `SimpleBoardUI.tileSize` 和 `slotItemSize` 做细调。
