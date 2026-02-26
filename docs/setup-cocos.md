@@ -48,3 +48,9 @@
 - 若显示“状态：使用内置关卡（resources 配置加载失败）”，代表 `assets/resources/config/levels.json` 未被正确导入，请在资源管理器确认它存在且类型为 JsonAsset。
 - 通关后会自动进入下一关（约 0.6 秒），也可点击“下一关”按钮立即进入。
 - 需要测试末关时：在 `Canvas -> QuickStartLauncher` 面板把 `startLevelId` 设置为 `60`；测试完成请改回 `1`。
+
+
+## F. 手机竖屏适配（本版已内置）
+- `QuickStartLauncher` 会按当前舞台尺寸动态计算：HUD、牌盘区域、按钮、失败弹层大小。
+- 竖屏设备会自动放大可视区域利用率，不再沿用 PC 固定像素布局。
+- 若仍需微调：可在 `SimpleBoardUI.tileSize` 和 `slotItemSize` 做细调。
