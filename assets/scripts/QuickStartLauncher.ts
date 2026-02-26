@@ -37,10 +37,10 @@ export class QuickStartLauncher extends Component {
     const titleFont = Math.round(stageW * 0.055);
     const infoFont = Math.round(stageW * 0.045);
 
-    const statusLabel = this.createLabel('StatusLabel', new Vec3(0, stageH * 0.24, 0), '状态：加载中', stageW * 0.9, 72, titleFont);
+    const statusLabel = this.createLabel('StatusLabel', new Vec3(0, stageH * 0.34, 0), '状态：加载中', stageW * 0.9, 72, titleFont);
     const levelLabel = this.createLabel('LevelLabel', new Vec3(-stageW * 0.28, stageH * 0.43, 0), `关卡 ${this.startLevelId}/60`, stageW * 0.42, 58, infoFont);
     const walletLabel = this.createLabel('WalletLabel', new Vec3(stageW * 0.28, stageH * 0.43, 0), '金币 0 | 星星 0', stageW * 0.42, 58, infoFont);
-    const slotLabel = this.createLabel('SlotLabel', new Vec3(0, -stageH * 0.25, 0), '槽位（0）', stageW * 0.7, 60, infoFont);
+    const slotLabel = this.createLabel('SlotLabel', new Vec3(0, -stageH * 0.31, 0), '槽位（0）', stageW * 0.8, 60, infoFont);
 
     uiRoot.addChild(statusLabel);
     uiRoot.addChild(levelLabel);
@@ -48,9 +48,9 @@ export class QuickStartLauncher extends Component {
     uiRoot.addChild(slotLabel);
 
     const slotContainer = new Node('SlotContainer');
-    slotContainer.setPosition(new Vec3(0, -stageH * 0.33, 0));
+    slotContainer.setPosition(new Vec3(0, -stageH * 0.39, 0));
     const slotTransform = slotContainer.addComponent(UITransform);
-    slotTransform.setContentSize(stageW * 0.88, stageH * 0.08);
+    slotTransform.setContentSize(stageW * 0.94, stageH * 0.11);
     const slotLayout = slotContainer.addComponent(Layout);
     slotLayout.type = Layout.Type.HORIZONTAL;
     slotLayout.resizeMode = Layout.ResizeMode.CONTAINER;
@@ -60,14 +60,14 @@ export class QuickStartLauncher extends Component {
     uiRoot.addChild(slotContainer);
 
     const tileContainer = new Node('TileContainer');
-    tileContainer.setPosition(new Vec3(0, stageH * 0.02, 0));
+    tileContainer.setPosition(new Vec3(0, -stageH * 0.03, 0));
     const tileTransform = tileContainer.addComponent(UITransform);
-    const tileAreaW = stageW * 0.92;
-    const tileAreaH = stageH * 0.5;
+    const tileAreaW = stageW * 0.96;
+    const tileAreaH = stageH * 0.62;
     tileTransform.setContentSize(tileAreaW, tileAreaH);
 
-    const spacing = Math.max(8, Math.round(stageW * 0.012));
-    const padding = Math.max(8, Math.round(stageW * 0.01));
+    const spacing = Math.max(6, Math.round(stageW * 0.008));
+    const padding = Math.max(6, Math.round(stageW * 0.008));
     const columns = 6;
     const cell = Math.floor((tileAreaW - padding * 2 - spacing * (columns - 1)) / columns);
 
@@ -83,10 +83,10 @@ export class QuickStartLauncher extends Component {
     layout.paddingRight = padding;
     uiRoot.addChild(tileContainer);
 
-    const buttonWidth = stageW * 0.36;
-    const buttonHeight = stageH * 0.065;
-    const nextButtonNode = this.createButton('NextLevelButton', new Vec3(stageW * 0.24, -stageH * 0.44, 0), '下一关', buttonWidth, buttonHeight);
-    const restartButtonNode = this.createButton('RestartButton', new Vec3(-stageW * 0.24, -stageH * 0.44, 0), '重开本关', buttonWidth, buttonHeight);
+    const buttonWidth = stageW * 0.38;
+    const buttonHeight = stageH * 0.068;
+    const nextButtonNode = this.createButton('NextLevelButton', new Vec3(stageW * 0.24, -stageH * 0.47, 0), '下一关', buttonWidth, buttonHeight);
+    const restartButtonNode = this.createButton('RestartButton', new Vec3(-stageW * 0.24, -stageH * 0.47, 0), '重开本关', buttonWidth, buttonHeight);
     uiRoot.addChild(nextButtonNode);
     uiRoot.addChild(restartButtonNode);
 
@@ -107,8 +107,8 @@ export class QuickStartLauncher extends Component {
     simpleBoardUI.loseTitleLabel = losePanel.title;
     simpleBoardUI.loseDescLabel = losePanel.desc;
     simpleBoardUI.loseRestartButton = losePanel.restartButton;
-    simpleBoardUI.tileSize = Math.max(64, Math.min(120, cell));
-    simpleBoardUI.slotItemSize = Math.max(44, Math.floor(simpleBoardUI.tileSize * 0.72));
+    simpleBoardUI.tileSize = Math.max(72, Math.min(138, cell));
+    simpleBoardUI.slotItemSize = Math.max(56, Math.floor(simpleBoardUI.tileSize * 0.82));
 
     gameController.initializeWithData(
       {
