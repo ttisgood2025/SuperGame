@@ -1,0 +1,16 @@
+{
+  "palette": {
+    "background": "#FFF8EF",
+    "primary": "#FFB36B",
+    "secondary": "#9BE3C6",
+    "accent": "#8FB8FF"
+  },
+  "pets": [
+    { "id": 1, "name": "奶猫", "emoji": "🐱" },
+    { "id": 2, "name": "柯基", "emoji": "🐶" },
+    { "id": 3, "name": "垂耳兔", "emoji": "🐰" },
+    { "id": 4, "name": "熊猫", "emoji": "🐼" },
+    { "id": 5, "name": "小仓鼠", "emoji": "🐹" },
+    { "id": 6, "name": "海豹", "emoji": "🦭" }
+  ]
+}
