@@ -30,6 +30,11 @@
 - `src/` 目录是仓库内参考实现；实际在 Cocos 里运行只依赖 `assets/`。
 
 
+## 协作模板（记忆容器）
+- `.github/pull_request_template.md`：PR 提交时强制检查长期记忆、回归与验收。
+- `.github/ISSUE_TEMPLATE/bug_report.md`：Bug 报告模板（含复现步骤、环境与回归项）。
+- `.github/ISSUE_TEMPLATE/feature_request.md`：需求模板（含验收标准与非目标）。
+
 ## 开发复盘与标准化指南
 - `docs/standardized-dev-guide.md`：从 0 到当前可运行状态的最简 SOP、踩坑复盘与排障清单。
 
